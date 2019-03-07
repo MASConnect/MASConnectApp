@@ -11,7 +11,7 @@ export default class LoginScreen extends React.Component {
         <H3 style={styles.headerTextStyle}>Login</H3>
         <Form>
           <Item>
-            <Input placeholder="Email" />
+            <Input placeholder="Username" />
           </Item>
           <Item last>
             <Input placeholder="Password" secureTextEntry={true} />
