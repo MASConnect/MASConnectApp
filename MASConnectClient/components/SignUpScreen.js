@@ -4,6 +4,7 @@ import { StyleSheet, View } from "react-native";
 import axios from "axios";
 
 import { Button, Form, Item, Input, Text, H1, H3 } from "native-base";
+import auth from "../helper/auth";
 
 export default class SignUpScreen extends React.Component {
   constructor(props) {
@@ -24,6 +25,12 @@ export default class SignUpScreen extends React.Component {
       })
       .then(
         res => {
+          console.log(
+            "username: " +
+              this.state.username +
+              " password: " +
+              this.state.password
+          );
           return axios.post("http://127.0.0.1:8000/api/token-auth/", {
             username: this.state.username,
             password: this.state.password
@@ -36,9 +43,18 @@ export default class SignUpScreen extends React.Component {
       .then(
         res => {
           console.log(res.data.token);
+          return auth.storeToken(res.data.token);
         },
         err => {
           alert("Failed to create user");
+        }
+      )
+      .then(
+        res => {
+          this.props.navigation.replace("UserHome");
+        },
+        err => {
+          console.log(err);
         }
       );
   }

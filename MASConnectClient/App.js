@@ -3,11 +3,19 @@ import { StyleSheet, Text, View } from "react-native";
 
 import { createStackNavigator, createAppContainer } from "react-navigation";
 
+import auth from "./helper/auth";
+
 import LoginScreen from "./components/LoginScreen";
 import SignUpScreen from "./components/SignUpScreen";
+import HomeScreen from "./components/HomeScreen";
+import TabNavigator from "./components/TabNavigator";
 
 class App extends React.Component {
   componentDidMount() {
+    value = auth.getToken();
+    if (value !== null) {
+      this.props.navigation.replace("UserHome");
+    }
     this.props.navigation.replace("Login");
   }
 
@@ -29,6 +37,9 @@ const AppNavigator = createStackNavigator({
   },
   SignUp: {
     screen: SignUpScreen
+  },
+  UserHome: {
+    screen: TabNavigator
   }
 });
 
