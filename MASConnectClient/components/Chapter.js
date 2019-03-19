@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { Text, H1, H2, H3, List, ListItem, Button } from "native-base";
+import { Text, H1, H2, H3, List, ListItem, Button, Icon } from "native-base";
 
 export default class Chapter extends React.Component {
   render() {
@@ -46,11 +46,14 @@ export default class Chapter extends React.Component {
             </ListItem>
             <ListItem style={{ justifyContent: "space-between" }}>
               <Text>11 more events...</Text>
-              <Text>Go to events ></Text>
+              <View style={{ flexDirection: "row" }}>
+                <Text style={{ marginRight: 10 }}>Go to events</Text>
+                <Icon name="arrow-forward" />
+              </View>
             </ListItem>
           </List>
           <Button bordered style={styles.button}>
-            <Text>32 Unread Posts</Text>
+            <Text>32 Unread Posts!</Text>
           </Button>
         </View>
       </View>

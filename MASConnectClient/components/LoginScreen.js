@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 
 import axios from "axios";
-import { Button, Form, Item, Input, Text, H1, H3 } from "native-base";
+import { Button, Form, Item, Input, H1, H3, Text } from "native-base";
 import auth from "../helper/auth";
 
 export default class LoginScreen extends React.Component {
@@ -66,7 +66,7 @@ export default class LoginScreen extends React.Component {
         </Button>
         <Text
           onPress={() => this.props.navigation.replace("SignUp")}
-          style={styles.signUpText}
+          style={styles.loginText}
         >
           Sign Up
         </Text>
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     alignSelf: "center"
   },
-  signUpText: {
+  loginText: {
     marginTop: 10,
     alignSelf: "center"
   },

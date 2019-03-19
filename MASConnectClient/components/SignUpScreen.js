@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 
 import axios from "axios";
 
-import { Button, Form, Item, Input, Text, H1, H3 } from "native-base";
+import { Button, Form, Item, Input, H1, H3, Text } from "native-base";
 import auth from "../helper/auth";
 
 export default class SignUpScreen extends React.Component {
@@ -51,7 +51,18 @@ export default class SignUpScreen extends React.Component {
       )
       .then(
         res => {
-          this.props.navigation.replace("UserHome");
+          auth
+            .getToken()
+            .then(tokenVal => {
+              if (tokenVal !== null) {
+                this.props.navigation.replace("UserHome");
+              } else {
+                alert("Failed to login user");
+              }
+            })
+            .catch(error => {
+              console.log(error);
+            });
         },
         err => {
           console.log(err);

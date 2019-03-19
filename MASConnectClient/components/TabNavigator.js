@@ -7,7 +7,7 @@ import SettingsScreen from "./SettingsScreen";
 
 const TabNavigator = createBottomTabNavigator({
   Home: HomeScreen,
-  SettingsScreen: SettingsScreen
+  Settings: SettingsScreen
 });
 
 export default TabNavigator;

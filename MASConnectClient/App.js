@@ -12,11 +12,19 @@ import TabNavigator from "./components/TabNavigator";
 
 class App extends React.Component {
   componentDidMount() {
-    value = auth.getToken();
-    if (value !== null) {
-      this.props.navigation.replace("UserHome");
-    }
-    this.props.navigation.replace("Login");
+    auth
+      .getToken()
+      .then(tokenVal => {
+        console.log("token from promise: " + tokenVal);
+        if (tokenVal !== null) {
+          this.props.navigation.replace("UserHome");
+        } else {
+          this.props.navigation.replace("Login");
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   render() {
