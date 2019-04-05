@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 
 import axios from "axios";
 
-import { Button, Form, Item, Input, H1, H3, Text } from "native-base";
+import { Button, Form, Item, Input, H1, H3, Text, Picker } from "native-base";
 import auth from "../helper/auth";
 
 export default class SignUpScreen extends React.Component {
@@ -12,10 +12,14 @@ export default class SignUpScreen extends React.Component {
     this.state = {
       username: "",
       password: "",
-      email: ""
+      email: "",
+      selectedChapter: "0",
+      chapterList: []
     };
   }
 
+  //@@ TODO
+  //on signup, need to send selected chapter with user info
   createUser() {
     axios
       .post("http://127.0.0.1:8000/api/users/", {
@@ -70,6 +74,25 @@ export default class SignUpScreen extends React.Component {
       );
   }
 
+  getChapterList() {
+    axios.get("http://127.0.0.1:8000/api/chapters/").then(
+      res => {
+        // console.log(res.data[1]);
+        this.setState({ chapterList: res.data });
+        console.log(this.state.chapterList);
+      },
+      err => {
+        return new Promise((res, rej) =>
+          rej("Failed to retrieve chapter list")
+        );
+      }
+    );
+  }
+
+  componentDidMount() {
+    this.getChapterList();
+  }
+
   render() {
     return (
       <View>
@@ -101,6 +124,30 @@ export default class SignUpScreen extends React.Component {
               value={this.state.password}
             />
           </Item>
+          {/* <Text>Please select a chapter</Text> */}
+          <Item>
+            <Picker
+              note
+              mode="dropdown"
+              style={styles.picker}
+              selectedValue={this.state.selectedChapter}
+              onValueChange={selectedVal => {
+                this.setState({ selectedChapter: selectedVal });
+              }}
+            >
+              <Picker.Item label="Select a chapter" value="0" />
+              {this.state.chapterList.map(function(chapter) {
+                // console.log("chapter" + String(chapter.id));
+                return (
+                  <Picker.Item
+                    label={chapter.name}
+                    value={chapter.name}
+                    key={String(chapter.id)}
+                  />
+                );
+              })}
+            </Picker>
+          </Item>
         </Form>
         <Button primary style={styles.button} onPress={() => this.createUser()}>
           <Text>Sign Up</Text>
@@ -128,5 +175,8 @@ const styles = StyleSheet.create({
   headerTextStyle: {
     marginBottom: 5,
     alignSelf: "center"
+  },
+  picker: {
+    width: 300
   }
 });
