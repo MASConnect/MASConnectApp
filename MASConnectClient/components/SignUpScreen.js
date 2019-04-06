@@ -15,7 +15,6 @@ import {
   Icon
 } from "native-base";
 import auth from "../helper/auth";
-import { red } from "ansi-colors";
 
 export default class SignUpScreen extends React.Component {
   constructor(props) {
@@ -42,6 +41,7 @@ export default class SignUpScreen extends React.Component {
 
   /*
    * Validate Users form responses
+   * SHOULD WE VALIDATE ON INPUT DATA CHANGE???
    */
   validateFormResponse() {
     var newInputStatus = Object.assign({}, this.state.inputStatus);
@@ -162,7 +162,7 @@ export default class SignUpScreen extends React.Component {
       res => {
         // console.log(res.data[1]);
         this.setState({ chapterList: res.data });
-        console.log(this.state.chapterList);
+        // console.log(this.state.chapterList);
       },
       err => {
         return new Promise((res, rej) =>
@@ -259,7 +259,7 @@ export default class SignUpScreen extends React.Component {
               selectedValue={this.state.selectedChapter}
               onValueChange={selectedVal => {
                 this.setState({ selectedChapter: selectedVal }, () => {
-                  console.log(this.state.selectedChapter);
+                  // console.log(this.state.selectedChapter);
                 });
               }}
             >
