@@ -9,6 +9,7 @@ import LoginScreen from "./components/LoginScreen";
 import SignUpScreen from "./components/SignUpScreen";
 import HomeScreen from "./components/HomeScreen";
 import TabNavigator from "./components/TabNavigator";
+import { StoreProvider, StoreContext } from "./store";
 
 class App extends React.Component {
   componentDidMount() {
@@ -36,6 +37,25 @@ class App extends React.Component {
   }
 }
 
+function withStore(Comp) {
+  return class extends React.Component {
+    constructor(props) {
+      super(props);
+    }
+    render() {
+      return (
+        <StoreProvider>
+          <StoreContext.Consumer>
+            {store => {
+              return <Comp {...this.props} />;
+            }}
+          </StoreContext.Consumer>
+        </StoreProvider>
+      );
+    }
+  };
+}
+
 const AppNavigator = createStackNavigator({
   Home: {
     screen: App
@@ -44,7 +64,7 @@ const AppNavigator = createStackNavigator({
     screen: LoginScreen
   },
   SignUp: {
-    screen: SignUpScreen
+    screen: withStore(SignUpScreen)
   },
   UserHome: {
     screen: TabNavigator

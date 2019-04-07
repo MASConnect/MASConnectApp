@@ -15,6 +15,7 @@ import {
   Icon
 } from "native-base";
 import auth from "../helper/auth";
+import { StoreProvider, StoreContext } from "../store";
 
 export default class SignUpScreen extends React.Component {
   constructor(props) {
@@ -98,9 +99,10 @@ export default class SignUpScreen extends React.Component {
    * On SignUp createUser and Login
    */
   createUser() {
+    console.log(this.context);
     //Validate Form Response
     let formErrors = this.validateFormResponse();
-    //only allow a user to be created if no error is present
+    // //only allow a user to be created if no error is present
     if (formErrors) return;
 
     axios
@@ -110,29 +112,28 @@ export default class SignUpScreen extends React.Component {
         password: this.state.password,
         main_chapter: this.state.selectedChapter
       })
-      .then(
-        res => {
-          console.log(
-            "username: " +
-              this.state.username +
-              " password: " +
-              this.state.password
-          );
-          return axios.post("http://127.0.0.1:8000/api/token-auth/", {
-            username: this.state.username,
-            password: this.state.password
-          });
-        },
-        err => {
-          return new Promise((res, rej) => rej("Failed to create a user"));
-        }
-      )
+      .then(res => {
+        // console.log(
+        //   "username: " +
+        //     this.state.username +
+        //     " password: " +
+        //     this.state.password
+        // );
+        return axios.post("http://127.0.0.1:8000/api/token-auth/", {
+          username: this.state.username,
+          password: this.state.password
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      })
       .then(
         res => {
           console.log(res.data.token);
           return auth.storeToken(res.data.token);
         },
         err => {
+          console.log(err);
           alert("Failed to create user");
         }
       )
@@ -318,3 +319,5 @@ const styles = StyleSheet.create({
     marginRight: 10
   }
 });
+
+SignUpScreen.contextType = StoreContext;
