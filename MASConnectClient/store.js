@@ -1,7 +1,9 @@
 import React from "react";
 import { createContext } from "react";
-export const StoreContext = createContext({});
 import axios from "axios";
+
+
+export const StoreContext = createContext({hello: "world"});
 
 export class StoreProvider extends React.Component {
   constructor(props) {
@@ -39,4 +41,26 @@ export class StoreProvider extends React.Component {
       </StoreContext.Provider>
     );
   }
+}
+
+export function withStore(Comp) {
+  return class extends React.Component {
+    constructor(props) {
+      super(props);
+    }
+    render() {
+      return (
+        <StoreProvider>
+          <StoreContext.Consumer>
+            {(store) => {
+              return (
+                <Comp {...this.props} store={store}/>
+              )
+            }
+            }
+          </StoreContext.Consumer>
+        </StoreProvider>
+      );
+    }
+  };
 }

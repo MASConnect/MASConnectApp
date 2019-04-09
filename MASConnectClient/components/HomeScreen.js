@@ -9,11 +9,6 @@ import Chapter from "./Chapter";
 export default class HomeScreen extends React.Component {
   render() {
     return (
-      <StoreContext.Consumer>
-        {store => {
-          alert(store.user);
-          // store.actions.loadUser(20);
-          return (
             <Container>
               <Header style={{ height: 40 }}>
                 <Body>
@@ -23,8 +18,6 @@ export default class HomeScreen extends React.Component {
               <Chapter />
             </Container>
           );
-        }}
-      </StoreContext.Consumer>
-    );
+
   }
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import {withStore} from "../store";
 
 import axios from "axios";
 
@@ -15,9 +16,10 @@ import {
   Icon
 } from "native-base";
 import auth from "../helper/auth";
-import { StoreProvider, StoreContext } from "../store";
 
-export default class SignUpScreen extends React.Component {
+
+class SignUpScreen extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -174,6 +176,7 @@ export default class SignUpScreen extends React.Component {
   }
 
   componentDidMount() {
+    console.log("context", this.props.store)
     this.getChapterList();
   }
 
@@ -320,4 +323,5 @@ const styles = StyleSheet.create({
   }
 });
 
-SignUpScreen.contextType = StoreContext;
+
+export default withStore(SignUpScreen)

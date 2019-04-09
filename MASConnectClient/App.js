@@ -37,25 +37,6 @@ class App extends React.Component {
   }
 }
 
-function withStore(Comp) {
-  return class extends React.Component {
-    constructor(props) {
-      super(props);
-    }
-    render() {
-      return (
-        <StoreProvider>
-          <StoreContext.Consumer>
-            {store => {
-              return <Comp {...this.props} />;
-            }}
-          </StoreContext.Consumer>
-        </StoreProvider>
-      );
-    }
-  };
-}
-
 const AppNavigator = createStackNavigator({
   Home: {
     screen: App
@@ -64,7 +45,7 @@ const AppNavigator = createStackNavigator({
     screen: LoginScreen
   },
   SignUp: {
-    screen: withStore(SignUpScreen)
+    screen: SignUpScreen
   },
   UserHome: {
     screen: TabNavigator
