@@ -45,7 +45,10 @@ const AppNavigator = createStackNavigator({
     screen: LoginScreen
   },
   SignUp: {
-    screen: SignUpScreen
+    screen: SignUpScreen,
+    navigationOptions: ({ navigation }) => ({
+     header: null
+    }),
   },
   UserHome: {
     screen: TabNavigator

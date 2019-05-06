@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, SafeAreaView } from "react-native";
 import {withStore} from "../store";
 
 import axios from "axios";
@@ -101,7 +101,6 @@ class SignUpScreen extends React.Component {
    * On SignUp createUser and Login
    */
   createUser() {
-    console.log(this.context);
     //Validate Form Response
     let formErrors = this.validateFormResponse();
     // //only allow a user to be created if no error is present
@@ -115,19 +114,16 @@ class SignUpScreen extends React.Component {
         main_chapter: this.state.selectedChapter
       })
       .then(res => {
-        // console.log(
-        //   "username: " +
-        //     this.state.username +
-        //     " password: " +
-        //     this.state.password
-        // );
         return axios.post("http://127.0.0.1:8000/api/token-auth/", {
           username: this.state.username,
           password: this.state.password
         });
       })
       .catch(err => {
-        console.log(err);
+        Object.keys(err.response.data).forEach((e, i) =>{
+          alert(err.response.data[e])
+        });
+        return new Promise((r, e)=>e("failure"))
       })
       .then(
         res => {
@@ -136,7 +132,7 @@ class SignUpScreen extends React.Component {
         },
         err => {
           console.log(err);
-          alert("Failed to create user");
+          return new Promise((_, e) => e("failed"))
         }
       )
       .then(
@@ -147,7 +143,7 @@ class SignUpScreen extends React.Component {
               if (tokenVal !== null) {
                 this.props.navigation.replace("UserHome");
               } else {
-                alert("Failed to login user");
+                console.log("Failed to login user");
               }
             })
             .catch(error => {
@@ -176,12 +172,12 @@ class SignUpScreen extends React.Component {
   }
 
   componentDidMount() {
-    console.log("context", this.props.store)
     this.getChapterList();
   }
 
   render() {
     return (
+      <SafeAreaView>
       <View>
         <H1 style={styles.headerTextStyle}>Welcome to MAS Connect</H1>
         <H3 style={styles.headerTextStyle}>Sign Up</H3>
@@ -297,6 +293,7 @@ class SignUpScreen extends React.Component {
           Log In
         </Text>
       </View>
+      </SafeAreaView>
     );
   }
 }
