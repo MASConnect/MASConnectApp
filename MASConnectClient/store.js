@@ -1,9 +1,9 @@
 import React from "react";
 import { createContext } from "react";
 import axios from "axios";
+import auth from "./helper/auth";
 
-
-export const StoreContext = createContext({hello: "world"});
+export const StoreContext = createContext({ hello: "world" });
 
 export class StoreProvider extends React.Component {
   constructor(props) {
@@ -34,6 +34,18 @@ export class StoreProvider extends React.Component {
     this.setState({ user: newUser });
   }
 
+  fetchUser() {
+    var curToken = auth.getToken();
+    console.log("Fetched Token: " + curToken);
+    axios
+      .get("http://127.0.0.1:8000/api/users/me", {
+        token: curToken
+      })
+      .then(res => {
+        console.log("Response Data: " + res.data);
+      });
+  }
+
   render() {
     return (
       <StoreContext.Provider value={this.state}>
@@ -52,12 +64,9 @@ export function withStore(Comp) {
       return (
         <StoreProvider>
           <StoreContext.Consumer>
-            {(store) => {
-              return (
-                <Comp {...this.props} store={store}/>
-              )
-            }
-            }
+            {store => {
+              return <Comp {...this.props} store={store} />;
+            }}
           </StoreContext.Consumer>
         </StoreProvider>
       );

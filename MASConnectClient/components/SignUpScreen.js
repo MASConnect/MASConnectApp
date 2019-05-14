@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, View, SafeAreaView } from "react-native";
-import {withStore} from "../store";
+import { withStore } from "../store";
 
 import axios from "axios";
 
@@ -17,9 +17,7 @@ import {
 } from "native-base";
 import auth from "../helper/auth";
 
-
 class SignUpScreen extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -120,10 +118,10 @@ class SignUpScreen extends React.Component {
         });
       })
       .catch(err => {
-        Object.keys(err.response.data).forEach((e, i) =>{
-          alert(err.response.data[e])
+        Object.keys(err.response.data).forEach((e, i) => {
+          alert("Alert #" + i.toString() + " : " + err.response.data[e]);
         });
-        return new Promise((r, e)=>e("failure"))
+        return new Promise((r, e) => e("failure"));
       })
       .then(
         res => {
@@ -132,7 +130,7 @@ class SignUpScreen extends React.Component {
         },
         err => {
           console.log(err);
-          return new Promise((_, e) => e("failed"))
+          return new Promise((_, e) => e("failed"));
         }
       )
       .then(
@@ -178,121 +176,127 @@ class SignUpScreen extends React.Component {
   render() {
     return (
       <SafeAreaView>
-      <View>
-        <H1 style={styles.headerTextStyle}>Welcome to MAS Connect</H1>
-        <H3 style={styles.headerTextStyle}>Sign Up</H3>
-        <Form>
-          <Item
-            error={this.state.inputStatus.username == -1 ? true : false}
-            success={this.state.inputStatus.username == 1 ? true : false}
-          >
-            <Input
-              placeholder="Username"
-              onChangeText={text => this.setState({ username: text })}
-              name="username"
-              value={this.state.username}
-            />
-            {this.state.inputStatus.username == -1 && (
-              <Icon name="close-circle" />
-            )}
-            {this.state.inputStatus.username == 1 && (
-              <Icon name="checkmark-circle" />
-            )}
-          </Item>
-          {this.state.inputStatus.username == -1 && (
-            <Text style={styles.errorMessage}>
-              {this.state.errorMessage.usernameMessage}
-            </Text>
-          )}
-          <Item
-            error={this.state.inputStatus.email == -1 ? true : false}
-            success={this.state.inputStatus.email == 1 ? true : false}
-          >
-            <Input
-              placeholder="Email"
-              onChangeText={text => this.setState({ email: text })}
-              name="email"
-              value={this.state.email}
-            />
-            {this.state.inputStatus.email == -1 && <Icon name="close-circle" />}
-            {this.state.inputStatus.email == 1 && (
-              <Icon name="checkmark-circle" />
-            )}
-          </Item>
-          {this.state.inputStatus.email == -1 && (
-            <Text style={styles.errorMessage}>
-              {this.state.errorMessage.emailMessage}
-            </Text>
-          )}
-          <Item
-            error={this.state.inputStatus.password == -1 ? true : false}
-            success={this.state.inputStatus.password == 1 ? true : false}
-          >
-            <Input
-              placeholder="Password"
-              secureTextEntry={true}
-              onChangeText={text => this.setState({ password: text })}
-              name="password"
-              value={this.state.password}
-            />
-            {this.state.inputStatus.password == -1 && (
-              <Icon name="close-circle" />
-            )}
-            {this.state.inputStatus.password == 1 && (
-              <Icon name="checkmark-circle" />
-            )}
-          </Item>
-          {this.state.inputStatus.password == -1 && (
-            <Text style={styles.errorMessage}>
-              {this.state.errorMessage.passwordMessage}
-            </Text>
-          )}
-          <Item
-            last
-            error={this.state.inputStatus.chapter == -1 ? true : false}
-            success={this.state.inputStatus.chapter == 1 ? true : false}
-          >
-            <Picker
-              note
-              mode="dropdown"
-              style={styles.picker}
-              selectedValue={this.state.selectedChapter}
-              onValueChange={selectedVal => {
-                this.setState({ selectedChapter: selectedVal }, () => {
-                  // console.log(this.state.selectedChapter);
-                });
-              }}
+        <View>
+          <H1 style={styles.headerTextStyle}>Welcome to MAS Connect</H1>
+          <H3 style={styles.headerTextStyle}>Sign Up</H3>
+          <Form>
+            <Item
+              error={this.state.inputStatus.username == -1 ? true : false}
+              success={this.state.inputStatus.username == 1 ? true : false}
             >
-              <Picker.Item label="Select a chapter" value="default" />
-              {this.state.chapterList.map(function(chapter) {
-                // console.log("chapter" + String(chapter.id));
-                return (
-                  <Picker.Item
-                    label={chapter.name}
-                    value={chapter.id}
-                    key={String(chapter.id)}
-                  />
-                );
-              })}
-            </Picker>
-            {this.state.inputStatus.chapter == -1 && (
-              <Icon name="close-circle" />
+              <Input
+                placeholder="Username"
+                onChangeText={text => this.setState({ username: text })}
+                name="username"
+                value={this.state.username}
+              />
+              {this.state.inputStatus.username == -1 && (
+                <Icon name="close-circle" />
+              )}
+              {this.state.inputStatus.username == 1 && (
+                <Icon name="checkmark-circle" />
+              )}
+            </Item>
+            {this.state.inputStatus.username == -1 && (
+              <Text style={styles.errorMessage}>
+                {this.state.errorMessage.usernameMessage}
+              </Text>
             )}
-            {this.state.inputStatus.chapter == 1 && (
-              <Icon name="checkmark-circle" />
+            <Item
+              error={this.state.inputStatus.email == -1 ? true : false}
+              success={this.state.inputStatus.email == 1 ? true : false}
+            >
+              <Input
+                placeholder="Email"
+                onChangeText={text => this.setState({ email: text })}
+                name="email"
+                value={this.state.email}
+              />
+              {this.state.inputStatus.email == -1 && (
+                <Icon name="close-circle" />
+              )}
+              {this.state.inputStatus.email == 1 && (
+                <Icon name="checkmark-circle" />
+              )}
+            </Item>
+            {this.state.inputStatus.email == -1 && (
+              <Text style={styles.errorMessage}>
+                {this.state.errorMessage.emailMessage}
+              </Text>
             )}
-          </Item>
-        </Form>
-        <Button primary style={styles.button} onPress={() => this.createUser()}>
-          <Text>Sign Up</Text>
-        </Button>
-        <Text
-          onPress={() => this.props.navigation.replace("Login")}
-          style={styles.logInText}
-        >
-          Log In
-        </Text>
-      </View>
+            <Item
+              error={this.state.inputStatus.password == -1 ? true : false}
+              success={this.state.inputStatus.password == 1 ? true : false}
+            >
+              <Input
+                placeholder="Password"
+                secureTextEntry={true}
+                onChangeText={text => this.setState({ password: text })}
+                name="password"
+                value={this.state.password}
+              />
+              {this.state.inputStatus.password == -1 && (
+                <Icon name="close-circle" />
+              )}
+              {this.state.inputStatus.password == 1 && (
+                <Icon name="checkmark-circle" />
+              )}
+            </Item>
+            {this.state.inputStatus.password == -1 && (
+              <Text style={styles.errorMessage}>
+                {this.state.errorMessage.passwordMessage}
+              </Text>
+            )}
+            <Item
+              last
+              error={this.state.inputStatus.chapter == -1 ? true : false}
+              success={this.state.inputStatus.chapter == 1 ? true : false}
+            >
+              <Picker
+                note
+                mode="dropdown"
+                style={styles.picker}
+                selectedValue={this.state.selectedChapter}
+                onValueChange={selectedVal => {
+                  this.setState({ selectedChapter: selectedVal }, () => {
+                    // console.log(this.state.selectedChapter);
+                  });
+                }}
+              >
+                <Picker.Item label="Select a chapter" value="default" />
+                {this.state.chapterList.map(function(chapter) {
+                  // console.log("chapter" + String(chapter.id));
+                  return (
+                    <Picker.Item
+                      label={chapter.name}
+                      value={chapter.id}
+                      key={String(chapter.id)}
+                    />
+                  );
+                })}
+              </Picker>
+              {this.state.inputStatus.chapter == -1 && (
+                <Icon name="close-circle" />
+              )}
+              {this.state.inputStatus.chapter == 1 && (
+                <Icon name="checkmark-circle" />
+              )}
+            </Item>
+          </Form>
+          <Button
+            primary
+            style={styles.button}
+            onPress={() => this.createUser()}
+          >
+            <Text>Sign Up</Text>
+          </Button>
+          <Text
+            onPress={() => this.props.navigation.replace("Login")}
+            style={styles.logInText}
+          >
+            Log In
+          </Text>
+        </View>
       </SafeAreaView>
     );
   }
@@ -320,5 +324,4 @@ const styles = StyleSheet.create({
   }
 });
 
-
-export default withStore(SignUpScreen)
+export default withStore(SignUpScreen);

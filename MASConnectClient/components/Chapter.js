@@ -1,8 +1,9 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Text, H1, H2, H3, List, ListItem, Button, Icon } from "native-base";
+import { withStore, loadUser } from "../store";
 
-export default class Chapter extends React.Component {
+class Chapter extends React.Component {
   render() {
     return (
       <View>
@@ -85,3 +86,5 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start"
   }
 });
+
+export default withStore(Chapter);
