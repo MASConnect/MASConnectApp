@@ -1,13 +1,14 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
 import { createBottomTabNavigator } from "react-navigation";
 
-import HomeScreen from "./HomeScreen";
+import HomeScreen from "../components/HomeScreen";
 import SettingsScreen from "./SettingsScreen";
 
-const TabNavigator = createBottomTabNavigator({
+export default createBottomTabNavigator({
   Home: HomeScreen,
   Settings: SettingsScreen
 });
 
-export default TabNavigator;
+
+
+

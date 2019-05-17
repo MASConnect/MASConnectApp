@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Text, H1, H2, H3, List, ListItem, Button, Icon } from "native-base";
-import { withStore, loadUser } from "../store";
+import { withStore, loadUser } from "../storeOld";
 
 class Chapter extends React.Component {
   render() {
@@ -87,4 +87,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default withStore(Chapter);
+export default Chapter;

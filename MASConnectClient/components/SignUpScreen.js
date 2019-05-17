@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, View, SafeAreaView } from "react-native";
-import { withStore } from "../store";
+import { withStore } from "../storeOld";
 
 import axios from "axios";
 
@@ -324,4 +324,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default withStore(SignUpScreen);
+export default SignUpScreen;

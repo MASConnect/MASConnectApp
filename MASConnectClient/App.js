@@ -7,11 +7,11 @@ import auth from "./helper/auth";
 
 import LoginScreen from "./components/LoginScreen";
 import SignUpScreen from "./components/SignUpScreen";
-import HomeScreen from "./components/HomeScreen";
 import TabNavigator from "./components/TabNavigator";
-import { StoreProvider, StoreContext } from "./store";
+import {Provider, connect} from "react-redux"
+import store from './store'
 
-class App extends React.Component {
+class Home extends React.Component {
   componentDidMount() {
     auth
       .getToken()
@@ -31,15 +31,16 @@ class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>MAS Connect</Text>
+          <Text>MAS Connect</Text>
       </View>
+
     );
   }
 }
 
 const AppNavigator = createStackNavigator({
   Home: {
-    screen: App
+    screen: Home
   },
   Login: {
     screen: LoginScreen
@@ -66,4 +67,12 @@ const styles = StyleSheet.create({
   }
 });
 
-export default AppContainer;
+export default class App extends React.Component {
+  render() {
+    return (
+      <Provider store={store}>
+        <AppContainer />
+      </Provider>
+    );
+  }
+}
